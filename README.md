@@ -582,3 +582,19 @@ menuentry "HBCD" {
 ```
 Once compleated you can reboot or test it with qemu:
 qemu-system-x86_64 -hda /dev/sd[X]
+
+
+
+#### Warning : by default, when you create a bootable USB key of Hiren Boot CD, there is a problem with the "syslinux.cfg" file created by UNetbootin
+
+To solve the problem :<br>
+  open this "syslinux.cfg" file with notepad
+  delete its content
+   paste this inside :
+
+```
+DEFAULT main
+ 
+LABEL main
+CONFIG /HBCD/isolinux.cfg
+```
