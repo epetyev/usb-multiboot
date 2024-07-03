@@ -562,3 +562,25 @@ not need to have that much memory (for Windows 7 >6GB).
 
 
 
+ADD grub + hiren notes
+https://www.linuxquestions.org/questions/linux-newbie-8/boot-hirens-boot-iso-from-grub2-4175452264/
+https://askubuntu.com/questions/146127/how-do-i-create-a-bootable-usb-on-ubuntu-from-hirens-boot-cd-iso-for-windows
+
+
+
+This approach use grub2 and so it is very convenient if you want to do a multi boot usb
+
+    install grub 2 on the usb driver ( grub-install --force --no-floppy --boot-directory=[PATH_TO_USB] /dev/sd[X]
+    extract Hiren iso files on the usb ( you should have a folder /HBCD in the root of the usb )
+    copy grub.exe (can be found in hbcd\dos\dos.gz, inside the .img file)
+    copy menu.lst from the hbcd folder to the root of the usb drive
+    add the following menu entry to grub.cfg on the usb:
+
+Here the menu entry:
+
+menuentry "HBCD" {  
+    linux16 /grub.exe --config-file="find --set-root /HBCD/menu.lst; configfile /HBCD/menu.lst"  
+}
+
+Once compleated you can reboot or test it with qemu:
+qemu-system-x86_64 -hda /dev/sd[X]
