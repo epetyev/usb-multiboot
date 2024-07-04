@@ -598,3 +598,34 @@ DEFAULT main
 LABEL main
 CONFIG /HBCD/isolinux.cfg
 ```
+
+### multi-live-usb-configs /hiren.cfg
+```
+LABEL gd
+MENU LABEL Chainload GRUB4DOS
+BOOT /HBCD/grldr
+```
+```
+LABEL hbcd1
+    MENU LABEL Hiren's Boot CD - Grub4Dos Menu
+    COM32 chain.c32 ntldr=/HBCD/grldr
+
+LABEL hbcd2
+    MENU LABEL Hiren's Boot CD - Isolinux Menu
+    CONFIG /HBCD/isolinux.cfg
+
+LABEL krd
+    MENU LABEL Kaspersky Rescue Disk
+    LINUX /boot/rescue root=UUID=* rootfstype=auto vga=791 init=/init initrd=/boot/rescue.igz kav_lang=ru udev liveimg splash quiet doscsi add_efi_memmap
+    INITRD /boot/rescue.igz
+
+LABEL sg2d
+    MENU LABEL Super Grub2 Disk - BIOS boot only
+    LINUX memdisk
+    INITRD /super_grub2_disk_hybrid_2.02s5.iso
+    APPEND iso
+  
+LABEL reboot                                 
+    MENU LABEL Reboot
+    COM32 reboot.c32
+```
